@@ -1,4 +1,5 @@
 \documentclass[titlepage]{scrartcl}
+\usepackage{graphicx}
 \addtokomafont{disposition}{\rmfamily}
 %opening
 \titlehead{BIOL 224L}
@@ -63,4 +64,19 @@
     \end{description}
 \end{description}
 \section{Histogram and Fano Factor}
+\subsection{Histogram}
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.75]{Problem2.png}
+    \caption{Simulated distribution of resistant bacteria in each culture for mutation hypothesis}
+    \label{fig:problem2_histogram}
+\end{figure}
+\subsection{Fano Factor Calculation}
+\subsubsection{Code}
+\begin{verbatim}
+    ...
+    fano_factor_mut = var(mut)/mean(mut);    
+\end{verbatim}
+\subsubsection{Results}
+The Fano Factor for the same population as Figure \ref{fig:problem2_histogram} is $58.8367589604213$
 \end{document}

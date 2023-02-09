@@ -14,3 +14,12 @@ for i=1:cultures
         n = n-new_mutations;
     end
 end
+
+%fanofactor for mut
+fano_factor_mut = var(mut)/mean(mut);
+
+%histogram for mut
+hist(mut);
+xlabel('resistant bacteria');
+ylabel('number of cultures')
+title('mutation hypothesis')
