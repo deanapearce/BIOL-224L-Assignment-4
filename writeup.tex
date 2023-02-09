@@ -1,0 +1,66 @@
+\documentclass[titlepage]{scrartcl}
+\addtokomafont{disposition}{\rmfamily}
+%opening
+\titlehead{BIOL 224L}
+\title{Assignment 4}
+\date{\today}
+\author{Dean Pearce}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+\section{Explanation of mutation code}
+\subsection{Code}
+\begin{verbatim}
+    % set variables
+    prob_mutation = 1e-8;
+    cultures = 30;
+    generations = 20;
+    initial_inoculum = 100;
+    
+    mut=zeros(cultures,1);
+    for i=1:cultures
+        n=initial_inoculum;
+        for t=1:generations
+            n=2*n;
+            new_mutations = poissrnd(n*prob_mutation);
+            mut(i) = 2*mut(i)+new_mutations;
+            n = n-new_mutations;
+        end
+    end
+\end{verbatim}
+\subsection{Explanation}
+\subsubsection{Initial Parameters}
+\begin{description}
+    \item[prob\_mutation] The probability of a sensitive bacteria to mutate to resistant
+    \item[cultures] The number of separate, discrete pools of bacteria
+    \item[generations] The number of generations the simulation will run
+    \item[initial\_inoculum] The initial number of bacteria in each culture (assumed to all be sensitive)
+\end{description}
+\subsubsection{Further Variables}
+\begin{description}
+    \item[i] Index of cultures
+    \item[t] Index of generations
+    \item[n] Number of sensitive bacteria in each culture
+    \item[mut] 1d array of number of mutants in each culture
+    \item[new\_mutations] Number of new mutants created in a generation
+\end{description}
+\subsection{Code Analysis}
+\begin{description}
+    \item[Lines 2-5] Instantiate initial variables
+    \item[Line 7] Initialize \textbf{mut} with all 0s
+    \item[Lines 8-16] For each culture:
+    \begin{description}
+        \item[Line 8] Set \textbf{n} equal to initial inoculum
+        \item[Lines 9-15] For each generation:
+        \begin{description}
+            \item[Line 11] Double \textbf{n} (mitosis)
+            \item[Line 12] Calculate number of mutants (via $\textbf{prob\_mutation}*\textbf{n}$)
+            \item[Line 13] Double number of mutants (\textbf{mut}) and add new mutants to mutant population (\textbf{mut})
+            \item[Line 14] Remove new mutants from sensitive population (\textbf{n})
+        \end{description}
+    \end{description}
+\end{description}
+\section{Histogram and Fano Factor}
+\end{document}
