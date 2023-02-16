@@ -1,6 +1,7 @@
 \documentclass[titlepage]{scrreprt}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{amsmath}
 \addtokomafont{disposition}{\rmfamily}
 %opening
 \titlehead{BIOL 224L}
@@ -151,5 +152,61 @@ As the number of mutants is a result of a number of independent trials with one 
     \caption{Simulated distribution of resistant bacteria in each culture for acquired immunity hypothesis, calculated via Poisson distribution}
     \label{fig:problem4_histogram}
 \end{figure}
-The Fano factor for the same population as Figure \ref{fig:problem4_histogram} is $1.38793103448276$
+The Fano factor for the same population as Figure \ref{fig:problem4_histogram} is $1.38793103448276$.
+\chapter{Comparisons}
+\section{Mutation Rate Estimations}
+\subsection{Acquired Resistance}
+\subsubsection{Calculation}
+\begin{equation*}
+\begin{split}
+    \frac{11}{30} &= e^{-m} \\
+    m &\approx 1.0033 \\
+    m &= a(N_t-N_0) \\
+    1.0033 &= a*(100*2^{20}-100) \\
+    a &= 9.56822*10^-9
+\end{split}
+\end{equation*}
+\subsubsection{Analysis}
+This number is, of course, fairly similar to the actual mutation rate $1*10^{-8}$.  Since, effectively, only a single generation of mutation was simulated, and with a very high sample size, this is a logical outcome.
+\subsection{Mutation}
+\subsubsection{Calculations}
+\begin{equation*}
+    \begin{split}
+        \frac{24}{30} &= e^{-m} \\
+        m &\approx 0.223144 \\
+        m &= a(N_t-N_0) \\
+        0.223144 &= a*(100*2^{20}-100) \\
+        a &= 2.12807*10^-9 %\text{\,per time cycle (20 generations)}
+    \end{split}
+\end{equation*}
+\subsubsection{Analysis}
+This estimated mutation rate is much lower than the actual mutation rate $1*10^{-8}$.  This is for a number of reasons, the primary reason being that this method only takes into account a single time unit and utilizes only the proportion of sensitive bacteria to resistant.
+\section{Experimental Design}
+\subsection{Parameter space for indistinguishable models}
+\subsubsection{Hypothesis}
+I would hypothesize that a region of parameter space which would be difficult to distinguish would be very low number of generations, and fairly low mutation rate, though this is not as critical.
+\subsubsection{Testing}
+The following parameters were used:
+\begin{verbatim}
+    prob_mutation = 1e-8;
+    cultures = 30;
+    generations = 2;
+    initial_inoculum = 100;
+\end{verbatim}
+\subsubsection{Results}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{Problem6_mut.png}
+    \caption{Simulated distribution of resistant bacteria in each culture for mutation hypothesis, using modified parameters}
+    \label{fig:problem6_mut_histogram}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{Problem6_acq.png}
+    \caption{Simulated distribution of resistant bacteria in each culture for acquired immunity hypothesis, using modified parameters}
+    \label{fig:problem6_acq_histogram}
+\end{figure}
+The Fano factors for both populations were incomputable.
+\subsubsection{Analysis}
+The results did indeed support my hypothesis, as with such low mutation rates, no mutations arose in either model.  In retrospect, this should have been trivial.
 \end{document}

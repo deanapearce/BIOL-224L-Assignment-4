@@ -6,6 +6,8 @@ for i = 1:cultures
     acq(i) = poissrnd(n*prob_mutation);
 end
 
+fano_factor_acq = var(acq)/mean(acq);
+
 %histogram for acq
 hist(acq);
 xlabel('resistant bacteria');
