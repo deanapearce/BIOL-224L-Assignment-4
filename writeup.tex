@@ -1,5 +1,6 @@
-\documentclass[titlepage]{scrartcl}
+\documentclass[titlepage]{scrreprt}
 \usepackage{graphicx}
+\usepackage{float}
 \addtokomafont{disposition}{\rmfamily}
 %opening
 \titlehead{BIOL 224L}
@@ -11,6 +12,7 @@
 \maketitle
 \tableofcontents
 \clearpage
+\chapter{Mutation Hypothesis}
 \section{Explanation of mutation code}
 \subsection{Code}
 \begin{verbatim}
@@ -31,15 +33,15 @@
         end
     end
 \end{verbatim}
-\subsection{Explanation}
-\subsubsection{Initial Parameters}
+
+\subsection{Initial Parameters}
 \begin{description}
     \item[prob\_mutation] The probability of a sensitive bacteria to mutate to resistant
     \item[cultures] The number of separate, discrete pools of bacteria
     \item[generations] The number of generations the simulation will run
     \item[initial\_inoculum] The initial number of bacteria in each culture (assumed to all be sensitive)
 \end{description}
-\subsubsection{Further Variables}
+\subsection{Additional Variables}
 \begin{description}
     \item[i] Index of cultures
     \item[t] Index of generations
@@ -65,7 +67,7 @@
 \end{description}
 \section{Histogram and Fano Factor}
 \subsection{Histogram}
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[scale=0.75]{Problem2.png}
     \caption{Simulated distribution of resistant bacteria in each culture for mutation hypothesis}
@@ -79,4 +81,57 @@
 \end{verbatim}
 \subsubsection{Results}
 The Fano Factor for the same population as Figure \ref{fig:problem2_histogram} is $58.8367589604213$
+\chapter{Acquired Immunity Hypothesis}
+\section{Code Explanation}
+\subsection{Code}
+\begin{verbatim}
+%set variables
+params;
+
+acq = zeros(cultures,1);
+n = initial_inoculum*2^generations;
+for i = 1:cultures
+    acq(i) = binornd(n,prob_mutation);
+end
+\end{verbatim}
+\subsection{Initial Parameters}
+\begin{description}
+    \item[prob\_mutation] The probability of a sensitive bacteria to mutate to resistant
+    \item[cultures] The number of separate, discrete pools of bacteria
+    \item[generations] The number of generations the simulation will run
+    \item[initial\_inoculum] The initial number of bacteria in each culture (assumed to all be sensitive)
+\end{description}
+\subsection{Additional Variables}
+\begin{description}
+    \item[acq] Number of mutant bacteria in each culture
+    \item[n] Number of sensitive bacteria in each culture
+    \item[i] Index of cultures 
+\end{description}
+\subsection{Code Analysis}
+\begin{description}
+    \item[Line 1] Initialize parameters
+    \item[Line 3] Initialize number of mutant bacteria (\textbf{acq}) to zero
+    \item[Line 4] Calculate total number of bacteria (all sensitive) in final generation prior to exposure to challenge
+    \item[Line 5-7] For each culture:
+    \begin{description}
+        \item[Line 6] Calculate number of mutants via binomial distribution from number of bacteria prior to challenge (\textbf{n}) and mutation probability (\textbf{prob\_mutation})
+        \begin{quote}
+            Matlab Reference: r = binornd(n,p) generates random numbers from the binomial distribution specified by the number of trials n and the probability of success for each trial p
+        \end{quote}
+    \end{description}
+\end{description}
+\section{Histogram and Fano Factors}
+\subsection{Histogram}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{Problem3.png}
+    \caption{Simulated distribution of resistant bacteria in each culture for acquired immunity hypothesis}
+    \label{fig:problem3_histogram}
+\end{figure}
+\subsection{Fano Factors}
+\subsubsection{Results}
+The Fano factor for the same population as Figure \ref{fig:problem3_histogram} is $1.26840633737185$
+\subsubsection{Interpretation}
+The Fano factor for the acquired immunity hypothesis is substantially lower than that of the mutation hypothesis.  This was to be expected, as the expected mean for the mutation hypothesis is much higher than that for acquired immunity as a result of the possibility of "jackpots", where an early mutation causes a large number of resistant bacteria.  This would, of course, increase the variance substantially.  However, the acquired immunity hypothesis has a far lower mean, and a variance which is not low enough to increase the Fano factor to a great degree.
+\section{Binomial v. Possion}
 \end{document}
