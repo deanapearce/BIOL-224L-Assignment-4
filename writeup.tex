@@ -134,4 +134,22 @@ The Fano factor for the same population as Figure \ref{fig:problem3_histogram} i
 \subsubsection{Interpretation}
 The Fano factor for the acquired immunity hypothesis is substantially lower than that of the mutation hypothesis.  This was to be expected, as the expected mean for the mutation hypothesis is much higher than that for acquired immunity as a result of the possibility of "jackpots", where an early mutation causes a large number of resistant bacteria.  This would, of course, increase the variance substantially.  However, the acquired immunity hypothesis has a far lower mean, and a variance which is not low enough to increase the Fano factor to a great degree.
 \section{Binomial v. Possion}
+As the number of mutants is a result of a number of independent trials with one single probability, it is possible to sample from a binomial distribution a great number of times.  This is exactly what the Poisson distribution represents in fact.
+\subsection{Code Rewrite}
+\subsubsection{Rewrite}
+\begin{verbatim}
+    acq = zeros(cultures,1);
+    n = initial_inoculum*2^generations;
+    for i = 1:cultures
+        acq(i) = poissrnd(n*prob_mutation);
+    end
+\end{verbatim}
+\subsubsection{Results}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.75]{Problem4.png}
+    \caption{Simulated distribution of resistant bacteria in each culture for acquired immunity hypothesis, calculated via Poisson distribution}
+    \label{fig:problem4_histogram}
+\end{figure}
+The Fano factor for the same population as Figure \ref{fig:problem4_histogram} is $1.38793103448276$
 \end{document}
